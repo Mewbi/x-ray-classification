@@ -9,6 +9,5 @@ def classify():
     
     image = Image(request.files['image'])
 
-    print(image.classify())
-
-    return jsonify({'image': 'Boooom'}), 200
+    result = image.report()
+    return jsonify(result), 200

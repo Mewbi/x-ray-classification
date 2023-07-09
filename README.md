@@ -20,7 +20,7 @@ curl -s http://127.0.0.1:5000/health -X GET | jq .
 
 Create an account
 ```sh
-curl http://127.0.0.1:5000/user/create -X POST -H 'Content-type: application/json' --data-binary '{"user": "mwb", "pass": "mypass"}'
+curl -s http://127.0.0.1:5000/user/create -X POST -H 'Content-type: application/json' --data-binary '{"user": "mwb", "pass": "mypass"}'
 {
     "token": "2c387b391fc1307b4da5c79925867d42"
 }
@@ -30,7 +30,7 @@ curl http://127.0.0.1:5000/user/create -X POST -H 'Content-type: application/jso
 Get token authentication
 
 ```sh
-curl http://127.0.0.1:5000/user/login -X POST -H 'Content-type: application/json' --data-binary '{"user": "mwb", "pass": "mypass"}'
+curl -s http://127.0.0.1:5000/user/login -X POST -H 'Content-type: application/json' --data-binary '{"user": "mwb", "pass": "mypass"}'
 {
     "token": "2c387b391fc1307b4da5c79925867d42"
 }
@@ -38,8 +38,9 @@ curl http://127.0.0.1:5000/user/login -X POST -H 'Content-type: application/json
 
 Get a image classification
 ```sh
-curl http://127.0.0.1:5000/image/classify -X POST -F "image=@<image-path>" -H 'auth: <token>'
+curl -s http://127.0.0.1:5000/image/classify -X POST -F "image=@<image-path>" -H 'auth: <token>'
 {
-
+  "classification": "Covid-19",
+  "hash": "57e3966c9967840716274d12cac97b52"
 }
 ```
