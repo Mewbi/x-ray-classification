@@ -7,4 +7,8 @@ def classify():
     if 'image' not in request.files:
         return jsonify({'error': 'No image found in request'}), 400
     
+    image = Image(request.files['image'])
+
+    print(image.classify())
+
     return jsonify({'image': 'Boooom'}), 200

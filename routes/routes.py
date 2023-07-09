@@ -1,7 +1,9 @@
 from flask import Blueprint
+from controllers.general_controller import health
 from controllers.image_controller import classify
 from controllers.user_controller import create_user, login
 
+general_bp  = Blueprint('general', __name__)
 image_bp = Blueprint('image', __name__, url_prefix='/image')
 user_bp  = Blueprint('user', __name__, url_prefix='/user')
 
@@ -12,3 +14,6 @@ user_bp.route('/', methods=['POST'])(create_user)
 
 # Image routes
 image_bp.route('/classify', methods=['POST'])(classify)
+
+# General
+general_bp.route('/health', methods=['GET'])(health)
