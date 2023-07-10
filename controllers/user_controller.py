@@ -22,8 +22,17 @@ def create_user():
         nome=data["nome"], email=data["email"], senha=data["senha"], idade=data["idade"]
     )
 
+    email = data["email"]
+
     conn = connect_db()
     cursor = conn.cursor()
+
+    # Verifique se o e-mail já está em uso
+    cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
+    result = cursor.fetchall()
+
+    if any(result):
+        return jsonify({"error": "E-mail já está em uso"}), 400
 
     # Insira os dados do novo usuário na tabela users
     cursor.execute(
@@ -60,11 +69,11 @@ def login():
     result = cursor.fetchone()
 
     if result:
+        conn.close()
         return jsonify({"message": "Informações de login corretas"}), 200
     else:
+        conn.close()
         return jsonify({"error": "Informações de login inválidas"}), 401
-
-    conn.close()
 
 
 @user_bp.route("/get_all", methods=["GET"])
