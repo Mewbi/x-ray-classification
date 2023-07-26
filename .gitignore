@@ -1,3 +1,5 @@
 **/__pycache__
 **/weights.hdf5
 ia/model/weights.hdf5
+database.db
+**/database.db

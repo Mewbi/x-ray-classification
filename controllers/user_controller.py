@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from models.user import User
-from config import connect_db
+from utils.setup import connect_db
 
 user_bp = Blueprint("user", __name__, url_prefix="/user")
 
