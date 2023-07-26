@@ -14,9 +14,21 @@ class Image():
         3: 'Viral Pneumonia'
     }
 
-    def __init__(self, filename):
+    def __init__(self, 
+                filename,
+                user_id,
+                username,
+                age,
+                name,
+                date):
         self.image = filename
         self.hash = self.image
+        self.user_id = user_id 
+        self.username = username
+        self.age = age
+        self.name = name
+        self.date = date
+        self.result = ""
 
     @property
     def hash(self):
@@ -37,7 +49,55 @@ class Image():
         img = img / 255
         img = img.reshape(-1,256,256,3)
         self._image = img
+
+    @property
+    def user_id(self):
+        return self._user_id
+
+    @user_id.setter
+    def user_id(self, value):
+        self._user_id = value
+
+    @property
+    def username(self):
+        return self._username
+
+    @username.setter
+    def username(self, value):
+        self._username = value
+
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self, value):
+        self._age = value
     
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @property
+    def date(self):
+        return self._date
+
+    @date.setter
+    def date(self, value):
+        self._date = value
+
+    @property
+    def result(self):
+        return self._result
+
+    @result.setter
+    def result(self, value):
+        self._result = value
+
     def classify(self):
         prediction = self.APP.ia.predict(self.image)
         prediction = np.argmax(prediction)
