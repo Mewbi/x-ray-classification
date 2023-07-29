@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 
 import os
-import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
 
 from tensorflow.python.client import device_lib
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras import layers, optimizers
-from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, Dropout
-from tensorflow.keras.models import Model, load_model
-from tensorflow.keras import backend as K
+from tensorflow.keras.layers import Input, Dense, Flatten, AveragePooling2D, Dropout
+from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint, LearningRateScheduler
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 
 # Setup Vars
@@ -71,30 +68,15 @@ validation_generator = image_generator.flow_from_directory(batch_size = 40,
 # Generate a batch of 40 images and labels
 train_images, train_labels = next(train_generator)
 
-
-
-# Create a grid of 16 images along with their corresponding labels
-L = 4
-W = 4
-
-fig, axes = plt.subplots(L, W, figsize = (12, 12))
-axes = axes.ravel()
-
-for i in np.arange(0, L*W):
-    axes[i].imshow(train_images[i])
-    axes[i].set_title(label_names[np.argmax(train_labels[i])])
-    axes[i].axis('off')
-
-plt.subplots_adjust(wspace = 0.5)
-
-basemodel = ResNet50(weights = 'imagenet', include_top = False, input_tensor = Input(shape = (256, 256, 3)))
+basemodel = ResNet50(weights = 'imagenet', 
+                     include_top = False, 
+                     input_tensor = Input(shape = (256, 256, 3)))
 basemodel.summary()
 
 #freezing the model upto the last stage - 4 and re-training stage -5 
 
 for layer in basemodel.layers[:-10]:
   layers.trainable = False
-
 
 headmodel = basemodel.output
 headmodel = AveragePooling2D(pool_size = (4,4))(headmodel)

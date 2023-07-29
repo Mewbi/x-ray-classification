@@ -38,15 +38,18 @@ model.load_weights(model_path)
 # Compile model
 print("Compiling model...")
 
-model.compile(
-        optimizer = tf.keras.optimizers.legacy.RMSprop(0.0001, decay = 1e-6), 
-        loss = "categorical_crossentropy", 
-        metrics = ["accuracy"])
+model.compile(optimizer = tf.keras.optimizers.legacy.RMSprop(0.0001, decay = 1e-6), 
+              loss = "categorical_crossentropy", 
+              metrics = ["accuracy"])
 
 
 # Prepare test
 test_gen = ImageDataGenerator(rescale = 1./255)
-test_generator = test_gen.flow_from_directory(batch_size = 4, directory= test_directory, shuffle= True, target_size=(256,256), class_mode= 'categorical')
+test_generator = test_gen.flow_from_directory(batch_size = 4, 
+                                              directory = test_directory, 
+                                              shuffle = True, 
+                                              target_size=(256,256), 
+                                              class_mode= 'categorical')
 
 
 # Test accuracy
