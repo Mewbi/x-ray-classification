@@ -1,6 +1,12 @@
+import base64
+import io
+import os
+import sqlite3
 from flask import jsonify, request
 from models.image import Image
 from utils.setup import connect_db
+import matplotlib.pyplot as plt
+from PIL import Image
 
 def classify():
 
@@ -74,3 +80,56 @@ def classify():
     }
 
     return jsonify(response), 200
+
+def get_all_imagens():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM classifications")
+    result = cursor.fetchall()
+
+    classificacoes = []
+    for row in result:
+        imagem = base64.b64encode(row[8]).decode('utf-8')
+        classificacao = {
+            'id': row[0],
+            'user_id': row[1],
+            'username': row[2],
+            'age': row[3],
+            'name': row[4],
+            'date': row[5],
+            'hash': row[6],
+            'result': row[7],
+            'image': base64.b64encode(row[8]).decode('utf-8') if row[8] else None
+        }
+        classificacoes.append(classificacao)
+    conn.close()
+
+    return jsonify(classificacoes), 200
+
+def get_all_imagens_conta(id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM classifications WHERE user_id = ?", (id,))
+    result = cursor.fetchall()
+
+    classificacoes = []
+    for row in result:
+        classificacao = {
+                'id': row[0],
+                'user_id': row[1],
+                'username': row[2],
+                'age': row[3],
+                'name': row[4],
+                'date': row[5],
+                'hash': row[6],
+                'result': row[7],
+                'image': base64.b64encode(row[8]).decode('utf-8') if row[8] else None
+            }
+        classificacoes.append(classificacao)
+
+    conn.close()
+
+    return jsonify(classificacoes), 200
+
