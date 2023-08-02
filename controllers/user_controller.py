@@ -14,12 +14,11 @@ def create_user():
         "nome" not in data
         or "email" not in data
         or "senha" not in data
-        or "idade" not in data
     ):
         return jsonify({"error": "Informações de cadastro incompletas"}), 400
 
     novo_usuario = User(
-        nome=data["nome"], email=data["email"], senha=data["senha"], idade=data["idade"]
+        nome=data["nome"], email=data["email"], senha=data["senha"]
     )
 
     email = data["email"]
@@ -37,10 +36,10 @@ def create_user():
     # Insira os dados do novo usuário na tabela users
     cursor.execute(
         """
-        INSERT INTO users (nome, email, senha, idade)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO users (nome, email, senha)
+        VALUES (?, ?, ?)
     """,
-        (novo_usuario.nome, novo_usuario.email, novo_usuario.senha, novo_usuario.idade),
+        (novo_usuario.nome, novo_usuario.email, novo_usuario.senha),
     )
 
     conn.commit()
@@ -61,7 +60,7 @@ def login():
 
     cursor.execute(
         """
-        SELECT * FROM users WHERE email = ? AND senha = ?
+        SELECT id, nome, senha FROM users WHERE email = ? AND senha = ?
     """,
         (email, senha),
     )
@@ -70,7 +69,15 @@ def login():
 
     if result:
         conn.close()
-        return jsonify({"message": "Informações de login corretas"}), 200
+        return jsonify(
+            {
+                "message": "Informações de login corretas",
+                "user": {
+                    "user_id": result[0],
+                    "nome": result[1],
+                    "email": result[2]
+                }
+            }), 200
     else:
         conn.close()
         return jsonify({"error": "Informações de login inválidas"}), 401
@@ -91,7 +98,6 @@ def get_all():
             "nome": row[1],
             "email": row[2],
             "senha": row[3],
-            "idade": row[4],
         }
         users.append(user)
 

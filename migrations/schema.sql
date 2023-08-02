@@ -2,8 +2,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     email TEXT NOT NULL,
-    senha TEXT NOT NULL,
-    idade INTEGER NOT NULL
+    senha TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS classifications (

@@ -21,7 +21,8 @@ class Image():
                 age,
                 name,
                 date):
-        self.image = filename
+        file_bin = filename.read()
+        self.image = file_bin 
         self.hash = self.image
         self.user_id = user_id 
         self.username = username
@@ -43,12 +44,13 @@ class Image():
         return self._image
 
     @image.setter
-    def image(self, filename):
-        img = cv2.imdecode(np.fromstring(filename.read(), np.uint8), cv2.IMREAD_COLOR)
+    def image(self, file_bin):
+        img = cv2.imdecode(np.fromstring(file_bin, np.uint8), cv2.IMREAD_COLOR)
         img = cv2.resize(img, (256,256))
         img = img / 255
         img = img.reshape(-1,256,256,3)
         self._image = img
+        self._image_raw = file_bin
 
     @property
     def user_id(self):
@@ -97,6 +99,15 @@ class Image():
     @result.setter
     def result(self, value):
         self._result = value
+
+    @property
+    def image_raw(self):
+        return self._image_raw
+
+    @image_raw.setter
+    def image_raw(self, value):
+        self._image_raw = value
+
 
     def classify(self):
         prediction = self.APP.ia.predict(self.image)

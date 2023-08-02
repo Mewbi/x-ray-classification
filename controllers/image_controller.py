@@ -3,7 +3,7 @@ import io
 import os
 import sqlite3
 from flask import jsonify, request
-from models.image import Image
+from models.image import Image as Img
 from utils.setup import connect_db
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -35,7 +35,7 @@ def classify():
     name = request.form.get('name')
     date = request.form.get('date')
 
-    image = Image(
+    image = Img(
         request.files['image'],
         user_id,
         username,
@@ -63,7 +63,7 @@ def classify():
         INSERT INTO classifications (user_id, username, age, name, date, hash, result, image)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """,
-        (image.user_id, image.username, image.age, image.name, image.date, image.hash, image.result, image.image),
+        (image.user_id, image.username, image.age, image.name, image.date, image.hash, image.result, image.image_raw),
     )
 
     conn.commit()
@@ -107,11 +107,11 @@ def get_all_imagens():
 
     return jsonify(classificacoes), 200
 
-def get_all_imagens_conta(id):
+def list_classficiations_user(id):
     conn = connect_db()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM classifications WHERE user_id = ?", (id,))
+    cursor.execute("SELECT id, user_id, username, age, name, date, hash, result FROM classifications WHERE user_id = ?", (id,))
     result = cursor.fetchall()
 
     classificacoes = []
@@ -124,8 +124,7 @@ def get_all_imagens_conta(id):
                 'name': row[4],
                 'date': row[5],
                 'hash': row[6],
-                'result': row[7],
-                'image': base64.b64encode(row[8]).decode('utf-8') if row[8] else None
+                'result': row[7]
             }
         classificacoes.append(classificacao)
 
@@ -133,3 +132,20 @@ def get_all_imagens_conta(id):
 
     return jsonify(classificacoes), 200
 
+def get_image(hash):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT image FROM classifications WHERE hash = ?", (hash,))
+    result = cursor.fetchone()
+
+    conn.close()
+
+    if result:
+        img = result[0]
+        return jsonify(
+            {
+                "image": base64.b64encode(img).decode('utf-8') if img else None
+            }), 200
+    else:
+        return jsonify({"error": "Image not found"}), 404

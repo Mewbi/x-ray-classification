@@ -2,11 +2,10 @@ from datetime import datetime
 
 
 class User:
-    def __init__(self, nome, email, senha, idade):
+    def __init__(self, nome, email, senha):
         self.nome = nome
         self.email = email
         self.senha = senha
-        self.idade = idade
 
     def __repr__(self):
         return f"<User {self.nome}>"
@@ -31,6 +30,3 @@ class User:
 
     def get_idade(self):
         return self.idade
-
-    def set_idade(self, idade):
-        self.idade = idade
