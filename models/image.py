@@ -15,13 +15,12 @@ class Image():
     }
 
     def __init__(self, 
-                filename,
+                file_bin,
                 user_id,
                 username,
                 age,
                 name,
-                date):
-        file_bin = filename.read()
+                date): 
         self.image = file_bin 
         self.hash = self.image
         self.user_id = user_id 
