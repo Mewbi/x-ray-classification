@@ -152,3 +152,25 @@ def get_image(hash):
             }), 200
     else:
         return jsonify({"error": "Image not found"}), 404
+
+def delete_classification(hash, user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # Insert in database
+    cursor.execute(
+        """
+        DELETE FROM classifications WHERE hash = ? AND user_id = ?
+        """,
+        (hash, user_id),
+    )
+
+    conn.commit()
+    conn.close()
+
+    response = {
+        "hash": hash,
+        "user_id": user_id
+    }
+
+    return jsonify(response), 200
