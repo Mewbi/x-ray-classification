@@ -1,8 +1,19 @@
 # X-Ray Classification
 
-Classify chest x-ray diseases
+X Ray Classsification é um serviço para realizar a classificação de doenças com
+base em imagens de raio X toráxicos.
 
-Dataset from [COVID-19 CHEST X-RAY DATABASE](https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database)
+A classificação é feita em uma dos seguintes estados:
+
+- Normal
+- COVID-19
+- Opacidade pulmonar
+- Pneumonia viral
+
+A IA utilizada foi treinada com a seguinte Dataset [COVID-19 Chest X-Ray Database](https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database)
+
+## Dependências
+
 
 ## API Endpoints
 
