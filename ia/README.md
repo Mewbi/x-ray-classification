@@ -11,7 +11,7 @@ Esse módulo é destinado para o treinamento do modelo de IA para classificaçã
 - tensorflow
 - matplotlib
 
-## 🩻 Treinamento da IA
+## 🔬 Treinamento da IA
 
 O treinamento da IA para geração do modelo pode ser feita de duas maneiras:
 
