@@ -174,3 +174,29 @@ def delete_classification(hash, user_id):
     }
 
     return jsonify(response), 200
+
+def get_classification_by_hash(hash):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, user_id, username, age, name, date, hash, result, image FROM classifications WHERE hash = ? LIMIT 1", (hash,))
+    result = cursor.fetchone()
+
+    conn.close()
+
+    if result:
+        img = result[8]
+        return jsonify(
+            {
+                "id": result[0],
+                "user_id": result[1],
+                "username": result[2],
+                "age": result[3],
+                "name": result[4],
+                "date": result[5],
+                "hash": result[6],
+                "result": result[7],
+                "image": base64.b64encode(img).decode('utf-8') if img else None
+            }), 200
+    else:
+        return jsonify({"error": "Image not found"}), 404

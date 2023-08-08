@@ -211,3 +211,33 @@ Deleta uma classificação feita previamente em uma conta
     "user_id": 1
 }
 ```
+
+---
+
+### GET /classification/hash/\<hash>
+
+Retorna a classificação de uma imagem baseado na hash da imagem enviada
+
+**Parâmetros**
+
+| Nome | Local | Tipo | Descrição
+|-------------:|:--------:|:-------:| --- |
+| `hash`| URL | string  | Hash da imagem que foi classificada. |
+
+**Resposta**
+
+```json
+{
+    "age": 21,
+    "date": "02/08/2023",
+    "hash": "fb262f0de1b69e0cabf1fb407a5846d0",
+    "id": 3,
+    "name": "Torax do paciente alterado",
+    "result": "Lung opacity",
+    "user_id": 1,
+    "username": "Paciente da Silva",
+    "image": "iVBORw0KGgoAAAANSUhEUgAAASsAAAErCAAAAACjz/poAAAAB3RJTU
+    ...
+    dzdzVzUVu5u1RjYjVNPQRU0feUQ7X29HoMUXgMl8vblq9u8AAAAASUVORK5CYII="
+}
+```
