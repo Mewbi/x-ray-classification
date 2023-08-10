@@ -214,7 +214,7 @@ Deleta uma classificação feita previamente em uma conta
 
 ---
 
-### GET /classification/hash/\<hash>
+### GET /image/classification/hash/\<hash>
 
 Retorna a classificação de uma imagem baseado na hash da imagem enviada
 
