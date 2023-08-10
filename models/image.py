@@ -8,10 +8,10 @@ class Image():
 
     APP = current_app
     CLASSIFICATIONS = {
-        0: 'Covid-19', 
+        0: 'COVID-19', 
         1: 'Normal', 
-        2: 'Lung opacity', 
-        3: 'Viral Pneumonia'
+        2: 'Opacidade Pulmonar', 
+        3: 'Pneumonia Viral'
     }
 
     def __init__(self, 
