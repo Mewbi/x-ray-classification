@@ -60,7 +60,7 @@ def login():
 
     cursor.execute(
         """
-        SELECT id, nome, senha FROM users WHERE email = ? AND senha = ?
+        SELECT id, nome, email FROM users WHERE email = ? AND senha = ?
     """,
         (email, senha),
     )
