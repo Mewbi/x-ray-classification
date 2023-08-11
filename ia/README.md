@@ -88,16 +88,16 @@ python3 test.py
 ```
 Test Accuracy : 0.95703125
 
-              precision    recall  f1-score   support
+                    precision   recall  f1-score   support
 
-           0       0.94      0.95      0.95        64
-           1       0.96      1.00      0.98        64
-           2       0.95      0.92      0.94        64
-           3       0.98      0.95      0.97        64
+          COVID-19       0.94     0.95      0.95        64
+            Normal       0.96     1.00      0.98        64
+Opacidade Pulmonar       0.95     0.92      0.94        64
+   Pneumonia Viral       0.98     0.95      0.97        64
 
-   micro avg       0.96      0.96      0.96       256
-   macro avg       0.96      0.96      0.96       256
-weighted avg       0.96      0.96      0.96       256
+         micro avg       0.96     0.96      0.96       256
+         macro avg       0.96     0.96      0.96       256
+      weighted avg       0.96     0.96      0.96       256
 ```
 
 Além disso, é retornado visualmente algumas imagens que foram classificadas, tendo o resultado esperado e o resultado classificado pela IA.
